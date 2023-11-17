@@ -7,16 +7,29 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
 
 class LocationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('city', null, [
+            ->add('city', null,[
                 'attr' => [
-                    'placeholder' => 'Enter city name',
+                    'placeholder' => 'Wprowadz nazwe miasta'
                 ],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => "Wprowadz wartosc!",
+                        'groups' => ['create', 'edit']
+                    ]),
+                    new Length([
+                        'min' => 1,
+                        'max' => 50,
+                        'groups' => ['create', 'edit']
+                    ])
+                ]
             ])
             ->add('country', ChoiceType::class, [
                 'choices'=>[
