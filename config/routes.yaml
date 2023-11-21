@@ -9,3 +9,8 @@ location:
 
 measurement:
     path: ../measurement
+
+app_logout:
+    path: /logout
+    methods: GET
+
