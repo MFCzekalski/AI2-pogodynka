@@ -21,11 +21,24 @@ class LocationRepository extends ServiceEntityRepository
         parent::__construct($registry, Location::class);
     }
 
-    public function findLocationIdByName(string $location)
+    public function findLocationByCity(string $locationName)
     {
         $qb = $this->createQueryBuilder('m');
         $qb->where('m.city= :location')
-            ->setParameter('location', $location);
+            ->setParameter('location', $locationName);
+
+        $query = $qb->getQuery();
+        $result = $query->getResult();
+        return $result;
+    }
+
+    public function findLocationByCountryAndCity(string $countryName, string $cityName)
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb->where('m.city= :city')
+            ->setParameter('city', $cityName);
+        $qb->andWhere('m.country= :country')
+            ->setParameter('country', $countryName);
 
         $query = $qb->getQuery();
         $result = $query->getResult();
